@@ -1,5 +1,5 @@
 provider "aws" {
-    region = "us-east-1"
+  region = "us-east-1"
 }
 
 data "aws_ami" "my_ami" {
@@ -18,11 +18,13 @@ data "aws_ami" "my_ami" {
   owners = ["099720109477"] # Canonical
 }
 
-resource "aws_instance" "web" {
-  ami           = data.aws_ami.my_ami.id
-  instance_type = var.ec2_instance_type
+module "my_ec2_instance" {
+  source = "./modules"
 
-  tags = {
-    Name = var.ec2_instance_name
-  }
+  ec2_instance_type = var.ec2_instance_type
+  ec2_instance_name = var.ec2_instance_name
+  ec2_ami_id        = data.aws_ami.my_ami.id
+}
+output "instance_id" {
+  value = module.my_ec2_instance.ec2_instance_id
 }
