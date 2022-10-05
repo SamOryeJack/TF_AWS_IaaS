@@ -1,1 +1,3 @@
-#first commit
+provider "aws" {
+    region = "us-east-1"
+}
