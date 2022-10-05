@@ -20,9 +20,9 @@ data "aws_ami" "my_ami" {
 
 resource "aws_instance" "web" {
   ami           = data.aws_ami.my_ami.id
-  instance_type = "t2.micro"
+  instance_type = var.ec2_instance_type
 
   tags = {
-    Name = "My_World_The_Second"
+    Name = var.ec2_instance_name
   }
 }
